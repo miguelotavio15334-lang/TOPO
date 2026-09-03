@@ -1,4 +1,81 @@
--- MGS AUTO PALHAÇO V11 - AUTO ROUBAR / PEGAR / SALVAR / TP
+-- ESP BRAINROT
+b4.MouseButton1Click:Connect(function() 
+	for _,plot in pairs(workspace:FindFirstChild("Plots") and workspace.Plots:GetChildren() or {}) do 
+		for _,obj in pairs(plot:GetDescendants()) do 
+			if obj:IsA("Model") and not obj:FindFirstChild("Highlight") then 
+				local h=Instance.new("Highlight",obj) 
+				h.FillColor=Color3.fromRGB(0,255,0) 
+				h.FillTransparency=0.5
+			end 
+		end 
+	end 
+	b4.Text="ESP BRAINROT: ON" 
+	b4.BackgroundColor3=Color3.fromRGB(0,150,0) 
+end)
+
+-- ESP PLAYER - NOVO
+local espPlayerOn = false
+b4p.MouseButton1Click:Connect(function()
+	espPlayerOn = not espPlayerOn
+	b4p.Text = espPlayerOn and "ESP PLAYER: ON" or "ESP PLAYER: OFF"
+	b4p.BackgroundColor3 = espPlayerOn and Color3.fromRGB(0,150,0) or Color3.fromRGB(35,35,35)
+	
+	if espPlayerOn then
+		spawn(function()
+			while espPlayerOn do
+				for _, p in pairs(game.Players:GetPlayers()) do
+					if p ~= player and p.Character and p.Character:FindFirstChild("Head") then
+						if not p.Character.Head:FindFirstChild("ESPPlayer") then
+							local bill = Instance.new("BillboardGui", p.Character.Head)
+							bill.Name = "ESPPlayer"
+							bill.Size = UDim2.new(0,100,0,40)
+							bill.StudsOffset = Vector3.new(0,3,0)
+							bill.AlwaysOnTop = true
+							
+							local nome = Instance.new("TextLabel", bill)
+							nome.Size = UDim2.new(1,0,0.5,0)
+							nome.BackgroundTransparency = 1
+							nome.Text = p.Name
+							nome.TextColor3 = Color3.fromRGB(255,0,0)
+							nome.TextScaled = true
+							nome.Font = Enum.Font.GothamBold
+							
+							local dist = Instance.new("TextLabel", bill)
+							dist.Size = UDim2.new(1,0,0.5,0)
+							dist.Position = UDim2.new(0,0,0.5,0)
+							dist.BackgroundTransparency = 1
+							dist.TextColor3 = Color3.fromRGB(255,255,255)
+							dist.TextScaled = true
+							dist.Font = Enum.Font.Gotham
+							dist.Name = "Dist"
+							
+							local hl = Instance.new("Highlight", p.Character)
+							hl.Name = "ESPHighlight"
+							hl.FillColor = Color3.fromRGB(255,0,0)
+							hl.OutlineColor = Color3.fromRGB(255,255,255)
+							hl.FillTransparency = 0.5
+						end
+						-- atualiza distancia
+						if p.Character.Head:FindFirstChild("ESPPlayer") then
+							local d = math.floor((player.Character.HumanoidRootPart.Position - p.Character.HumanoidRootPart.Position).Magnitude)
+							p.Character.Head.ESPPlayer.Dist.Text = d.."m"
+						end
+					end
+				end
+				wait(0.2)
+			end
+		end)
+	else
+		for _, p in pairs(game.Players:GetPlayers()) do
+			if p.Character then
+				if p.Character.Head:FindFirstChild("ESPPlayer") then p.Character.Head.ESPPlayer:Destroy() end
+				if p.Character:FindFirstChild("ESPHighlight") then p.Character.ESPHighlight:Destroy() end
+			end
+		end
+	end
+end)
+
+-- MGS GHOST V10 LIMPO - SÓ O NECESSÁRIO + ANUNCIO GLOBAL
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local UIS = game:GetService("UserInputService")
@@ -11,16 +88,16 @@ gui.Name = "MGSGui"
 gui.ResetOnSpawn = false
 
 local menu = Instance.new("ScrollingFrame", gui)
-menu.Size = UDim2.new(0,300,0,500)
-menu.Position = UDim2.new(0,15,0.5,-250)
+menu.Size = UDim2.new(0,285,0,420)
+menu.Position = UDim2.new(0,15,0.5,-210)
 menu.BackgroundColor3 = Color3.fromRGB(10,10,10)
-menu.CanvasSize = UDim2.new(0,0,0,650)
+menu.CanvasSize = UDim2.new(0,0,0,500)
 menu.ScrollBarThickness = 6
 Instance.new("UICorner", menu)
 
 local function criarBotao(txt, y, cor)
 	local b = Instance.new("TextButton", menu)
-	b.Size = UDim2.new(0.92,0,0,32)
+	b.Size = UDim2.new(0.92,0,0,34)
 	b.Position = UDim2.new(0.04,0,0,y)
 	b.Text = txt
 	b.TextScaled = true
@@ -33,198 +110,84 @@ end
 
 local t = Instance.new("TextLabel", menu)
 t.Size = UDim2.new(1,0,0,28)
-t.Text = "MGS AUTO PALHAÇO V11"
+t.Text = "MGS V10 LIMPO"
 t.TextScaled = true
 t.BackgroundTransparency = 1
-t.TextColor3 = Color3.fromRGB(255,0,100)
+t.TextColor3 = Color3.fromRGB(0,255,0)
 t.Font = Enum.Font.GothamBlack
 
--- TOPO
+-- FAIXA DO TOPO IGUAL BRAINROT
 local topGui = Instance.new("ScreenGui", player.PlayerGui)
 topGui.Name = "TopAnuncio"
 topGui.ResetOnSpawn = false
+
 local topFrame = Instance.new("Frame", topGui)
 topFrame.Size = UDim2.new(0,600,0,45)
 topFrame.Position = UDim2.new(0.5,-300,0,10)
 topFrame.BackgroundColor3 = Color3.fromRGB(0,0,0)
+topFrame.BackgroundTransparency = 0.2
 topFrame.Visible = false
 Instance.new("UICorner", topFrame)
 local stroke = Instance.new("UIStroke", topFrame)
-stroke.Color = Color3.fromRGB(255,0,100)
+stroke.Color = Color3.fromRGB(255,255,0)
 stroke.Thickness = 2
+
 local topText = Instance.new("TextLabel", topFrame)
 topText.Size = UDim2.new(1,0,1,0)
 topText.BackgroundTransparency = 1
+topText.Text = ""
 topText.TextScaled = true
-topText.TextColor3 = Color3.fromRGB(255,0,100)
+topText.TextColor3 = Color3.fromRGB(255,255,0)
 topText.Font = Enum.Font.GothamBlack
-local function anunciarTopo(msg) topText.Text="🤡 "..msg.." 🤡" topFrame.Visible=true wait(4) topFrame.Visible=false end
 
--- BOTOES AUTO
-local b1 = criarBotao("🤡 AUTO ROUBAR PALHAÇO: OFF", 30, Color3.fromRGB(80,0,40))
-local b2 = criarBotao("🤡 AUTO PEGAR PALHAÇO: OFF", 66, Color3.fromRGB(80,0,40))
-local b3 = criarBotao("💾 AUTO SALVAR PALHAÇO: OFF", 102, Color3.fromRGB(0,60,80))
-local b4 = criarBotao("⚡ AUTO TP QUANDO PEGAR: OFF", 138, Color3.fromRGB(0,80,0))
-local b5 = criarBotao("VELOCIDADE 150: OFF", 180)
-local b6 = criarBotao("NOCLIP: OFF", 216)
-local b7 = criarBotao("VOAR 200: OFF", 252)
-local b8 = criarBotao("ESP PALHAÇO: OFF", 288)
-local b9 = criarBotao("ESP PLAYER: OFF", 324)
+local function anunciarTopo(msg)
+	topText.Text = "📢 "..msg.." 📢"
+	topFrame.Visible = true
+	pcall(function() game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync(msg) end)
+	wait(5)
+	topFrame.Visible = false
+end
+
+local b1 = criarBotao("VELOCIDADE 150: OFF", 30)
+local b2 = criarBotao("NOCLIP: OFF", 68)
+local b3 = criarBotao("VOAR 200 WASD: OFF", 106)
+local b4 = criarBotao("ESP BRAINROT: OFF", 144)
+local b5 = criarBotao("ANTI AFK: ON", 182, Color3.fromRGB(0,80,0))
 
 local caixaFala = Instance.new("TextBox", menu)
-caixaFala.Size = UDim2.new(0.92,0,0,30)
-caixaFala.Position = UDim2.new(0.04,0,0,362)
-caixaFala.PlaceholderText = "Anunciar no topo..."
+caixaFala.Size = UDim2.new(0.92,0,0,32)
+caixaFala.Position = UDim2.new(0.04,0,0,224)
+caixaFala.PlaceholderText = "O que anunciar no topo?"
+caixaFala.Text = ""
 caixaFala.TextScaled = true
 caixaFala.BackgroundColor3 = Color3.fromRGB(50,50,50)
 caixaFala.TextColor3 = Color3.new(1,1,1)
+caixaFala.Font = Enum.Font.GothamBold
 Instance.new("UICorner", caixaFala)
-local bAnuncio = criarBotao("🔊 ANUNCIAR TOPO", 398, Color3.fromRGB(200,0,100))
-local b14 = criarBotao("TELEPORTE MINHA BASE", 434)
-local b15 = criarBotao("FECHAR (M)", 470, Color3.fromRGB(150,0,0))
 
--- VARS
-local autoRoubar, autoPegar, autoSalvar, autoTpPegar = false,false,false,false
+local bAnuncio = criarBotao("🔊 ANUNCIAR NO TOPO", 264, Color3.fromRGB(200,150,0))
+local b14 = criarBotao("TELEPORTE MINHA BASE", 302)
+local b15 = criarBotao("FECHAR (M)", 340, Color3.fromRGB(150,0,0))
+
 local noclipOn, flyOn = false,false
 local flySpeed = 200
-local minhaBasePos = nil
+local antiAfkOn = true
 
--- ACHA MINHA BASE
-for _,p in pairs(workspace:FindFirstChild("Plots") and workspace.Plots:GetChildren() or {}) do
-	if string.find(p.Name, player.Name) then
-		minhaBasePos = p:GetPivot().Position + Vector3.new(0,10,0)
-	end
-end
-
--- FUNÇÕES AUTO
-local function getPalhacoMaisRaro()
-	local melhor = nil
-	local melhorNome = ""
-	for _,plot in pairs(workspace.Plots:GetChildren()) do
-		if not string.find(plot.Name, player.Name) then
-			for _,obj in pairs(plot:GetDescendants()) do
-				if obj:IsA("Model") and obj.Name:lower():find("palha") or obj.Name:lower():find("clown") or obj.Name:lower():find("brainrot") then
-					melhor = obj
-					melhorNome = obj.Name
-				end
-				-- procura ProximityPrompt de roubar
-				if obj:IsA("ProximityPrompt") and obj.ObjectText:lower():find("steal") or obj.ObjectText:lower():find("roubar") then
-					melhor = obj.Parent
-				end
-			end
-		end
-	end
-	return melhor
-end
-
--- AUTO ROUBAR PALHAÇO
-b1.MouseButton1Click:Connect(function()
-	autoRoubar=not autoRoubar
-	b1.Text=autoRoubar and "🤡 AUTO ROUBAR: ON" or "🤡 AUTO ROUBAR PALHAÇO: OFF"
-	b1.BackgroundColor3=autoRoubar and Color3.fromRGB(0,150,0) or Color3.fromRGB(80,0,40)
-	if autoRoubar then
-		spawn(function()
-			while autoRoubar do
-				for _,plot in pairs(workspace.Plots:GetChildren()) do
-					if not string.find(plot.Name, player.Name) then
-						for _,prompt in pairs(plot:GetDescendants()) do
-							if prompt:IsA("ProximityPrompt") then
-								prompt.MaxActivationDistance=40
-								prompt.HoldDuration=0
-								if autoRoubar then
-									pcall(function() fireproximityprompt(prompt) end)
-								end
-							end
-						end
-					end
-				end
-				wait(0.3)
-			end
-		end)
-		anunciarTopo("AUTO ROUBAR PALHAÇO LIGADO!")
-	end
-end)
-
--- AUTO PEGAR PALHAÇO (NO CHÃO)
-b2.MouseButton1Click:Connect(function()
-	autoPegar=not autoPegar
-	b2.Text=autoPegar and "🤡 AUTO PEGAR: ON" or "🤡 AUTO PEGAR PALHAÇO: OFF"
-	b2.BackgroundColor3=autoPegar and Color3.fromRGB(0,150,0) or Color3.fromRGB(80,0,40)
-	if autoPegar then
-		spawn(function()
-			while autoPegar do
-				for _,v in pairs(workspace:GetDescendants()) do
-					if v:IsA("Tool") or v:IsA("Model") and v.Name:lower():find("palha") then
-						if v:FindFirstChild("Handle") or v:IsA("Tool") then
-							local handle = v:FindFirstChild("Handle") or v
-							if (handle.Position - player.Character.HumanoidRootPart.Position).Magnitude < 30 then
-								pcall(function() fireproximityprompt(v:FindFirstChildOfClass("ProximityPrompt"),1) end)
-								if v:IsA("Tool") then
-									player.Character.Humanoid:EquipTool(v)
-								end
-							end
-						end
-					end
-				end
-				wait(0.2)
-			end
-		end)
-	end
-end)
-
--- AUTO SALVAR (TELEPORTA PRA BASE E SALVA)
-b3.MouseButton1Click:Connect(function()
-	autoSalvar=not autoSalvar
-	b3.Text=autoSalvar and "💾 AUTO SALVAR: ON" or "💾 AUTO SALVAR PALHAÇO: OFF"
-	b3.BackgroundColor3=autoSalvar and Color3.fromRGB(0,150,0) or Color3.fromRGB(0,60,80)
-	if autoSalvar then
-		spawn(function()
-			while autoSalvar do
-				wait(1)
-				if player.Character:FindFirstChildOfClass("Tool") and minhaBasePos then
-					-- Se tiver com palhaço na mão, volta pra base
-					local tool = player.Character:FindFirstChildOfClass("Tool")
-					if tool.Name:lower():find("palha") or tool.Name:lower():find("clown") or tool.Name:lower():find("brain") then
-						player.Character.HumanoidRootPart.CFrame = CFrame.new(minhaBasePos)
-						anunciarTopo("PALHAÇO SALVO NA BASE!")
-					end
-				end
-			end
-		end)
-	end
-end)
-
--- AUTO TP NA HORA QUE PEGAR PALHAÇO NA MÃO
-b4.MouseButton1Click:Connect(function()
-	autoTpPegar=not autoTpPegar
-	b4.Text=autoTpPegar and "⚡ AUTO TP: ON" or "⚡ AUTO TP QUANDO PEGAR: OFF"
-	b4.BackgroundColor3=autoTpPegar and Color3.fromRGB(0,150,0) or Color3.fromRGB(0,80,0)
-	if autoTpPegar then
-		player.Character.ChildAdded:Connect(function(child)
-			if autoTpPegar and child:IsA("Tool") then
-				if child.Name:lower():find("palha") or child.Name:lower():find("clown") or child.Name:lower():find("brain") or true then -- pega qualquer um
-					wait(0.2)
-					if minhaBasePos then
-						player.Character.HumanoidRootPart.CFrame = CFrame.new(minhaBasePos)
-						anunciarTopo("PEGUEI "..child.Name.." FUGINDO!")
-					end
-				end
-			end
-		end)
-	end
-end)
-
--- BASICOS
-b5.MouseButton1Click:Connect(function() if player.Character.Humanoid.WalkSpeed==16 then player.Character.Humanoid.WalkSpeed=150 b5.Text="VELOCIDADE 150: ON" b5.BackgroundColor3=Color3.fromRGB(0,150,0) else player.Character.Humanoid.WalkSpeed=16 b5.Text="VELOCIDADE 150: OFF" b5.BackgroundColor3=Color3.fromRGB(35,35,35) end end)
-b6.MouseButton1Click:Connect(function() noclipOn=not noclipOn b6.Text=noclipOn and "NOCLIP: ON" or "NOCLIP: OFF" b6.BackgroundColor3=noclipOn and Color3.fromRGB(0,150,0) or Color3.fromRGB(35,35,35) end)
+b1.MouseButton1Click:Connect(function() if player.Character.Humanoid.WalkSpeed==16 then player.Character.Humanoid.WalkSpeed=150 b1.Text="VELOCIDADE 150: ON" b1.BackgroundColor3=Color3.fromRGB(0,150,0) else player.Character.Humanoid.WalkSpeed=16 b1.Text="VELOCIDADE 150: OFF" b1.BackgroundColor3=Color3.fromRGB(35,35,35) end end)
+b2.MouseButton1Click:Connect(function() noclipOn=not noclipOn b2.Text=noclipOn and "NOCLIP: ON" or "NOCLIP: OFF" b2.BackgroundColor3=noclipOn and Color3.fromRGB(0,150,0) or Color3.fromRGB(35,35,35) end)
 RS.Stepped:Connect(function() if noclipOn then for _,v in pairs(player.Character:GetDescendants()) do if v:IsA("BasePart") then v.CanCollide=false end end end end)
-b7.MouseButton1Click:Connect(function() flyOn=not flyOn b7.Text=flyOn and "VOAR 200: ON" or "VOAR 200: OFF" b7.BackgroundColor3=flyOn and Color3.fromRGB(0,150,0) or Color3.fromRGB(35,35,35) if flyOn then spawn(function() while flyOn do RS.Heartbeat:Wait() local root=player.Character.HumanoidRootPart local cam=workspace.CurrentCamera local bv=root:FindFirstChild("MGSFly") or Instance.new("BodyVelocity",root) bv.Name="MGSFly" bv.MaxForce=Vector3.new(9e9,9e9,9e9) local vel=Vector3.new(0,0,0) if UIS:IsKeyDown(Enum.KeyCode.W) then vel=vel+(cam.CFrame.LookVector*flySpeed) end if UIS:IsKeyDown(Enum.KeyCode.S) then vel=vel-(cam.CFrame.LookVector*flySpeed) end if UIS:IsKeyDown(Enum.KeyCode.D) then vel=vel+(cam.CFrame.RightVector*flySpeed) end if UIS:IsKeyDown(Enum.KeyCode.A) then vel=vel-(cam.CFrame.RightVector*flySpeed) end if UIS:IsKeyDown(Enum.KeyCode.Space) then vel=vel+Vector3.new(0,flySpeed,0) end if UIS:IsKeyDown(Enum.KeyCode.LeftShift) then vel=vel-Vector3.new(0,flySpeed,0) end bv.Velocity=vel end if player.Character.HumanoidRootPart:FindFirstChild("MGSFly") then player.Character.HumanoidRootPart.MGSFly:Destroy() end end) end end)
-b8.MouseButton1Click:Connect(function() for _,plot in pairs(workspace.Plots:GetChildren()) do for _,obj in pairs(plot:GetDescendants()) do if obj:IsA("Model") and not obj:FindFirstChild("Highlight") then local h=Instance.new("Highlight",obj) h.FillColor=Color3.fromRGB(255,0,100) end end end b8.Text="ESP PALHAÇO: ON" b8.BackgroundColor3=Color3.fromRGB(0,150,0) end)
-b9.MouseButton1Click:Connect(function() for _,p in pairs(game.Players:GetPlayers()) do if p~=player and p.Character then local hl=Instance.new("Highlight",p.Character) hl.FillColor=Color3.fromRGB(255,0,0) end end b9.Text="ESP PLAYER: ON" b9.BackgroundColor3=Color3.fromRGB(0,150,0) end)
 
-bAnuncio.MouseButton1Click:Connect(function() if caixaFala.Text~="" then anunciarTopo(caixaFala.Text) end end)
-b14.MouseButton1Click:Connect(function() if minhaBasePos then player.Character.HumanoidRootPart.CFrame=CFrame.new(minhaBasePos) end end)
+b3.MouseButton1Click:Connect(function()
+	flyOn=not flyOn b3.Text=flyOn and "VOAR "..flySpeed.." WASD: ON" or "VOAR 200 WASD: OFF" b3.BackgroundColor3=flyOn and Color3.fromRGB(0,150,0) or Color3.fromRGB(35,35,35)
+	if flyOn then spawn(function() while flyOn do RS.Heartbeat:Wait() local root=player.Character.HumanoidRootPart local cam=workspace.CurrentCamera local bv=root:FindFirstChild("MGSFly") or Instance.new("BodyVelocity",root) bv.Name="MGSFly" bv.MaxForce=Vector3.new(9e9,9e9,9e9) local vel=Vector3.new(0,0,0) if UIS:IsKeyDown(Enum.KeyCode.W) then vel=vel+(cam.CFrame.LookVector*flySpeed) end if UIS:IsKeyDown(Enum.KeyCode.S) then vel=vel-(cam.CFrame.LookVector*flySpeed) end if UIS:IsKeyDown(Enum.KeyCode.D) then vel=vel+(cam.CFrame.RightVector*flySpeed) end if UIS:IsKeyDown(Enum.KeyCode.A) then vel=vel-(cam.CFrame.RightVector*flySpeed) end if UIS:IsKeyDown(Enum.KeyCode.Space) then vel=vel+Vector3.new(0,flySpeed,0) end if UIS:IsKeyDown(Enum.KeyCode.LeftShift) then vel=vel-Vector3.new(0,flySpeed,0) end bv.Velocity=vel end if player.Character.HumanoidRootPart:FindFirstChild("MGSFly") then player.Character.HumanoidRootPart.MGSFly:Destroy() end end) end
+end)
+
+b4.MouseButton1Click:Connect(function() for _,plot in pairs(workspace:FindFirstChild("Plots") and workspace.Plots:GetChildren() or {}) do for _,obj in pairs(plot:GetDescendants()) do if obj:IsA("Model") and not obj:FindFirstChild("Highlight") then local h=Instance.new("Highlight",obj) h.FillColor=Color3.fromRGB(0,255,0) end end end b4.Text="ESP: ON" b4.BackgroundColor3=Color3.fromRGB(0,150,0) end)
+
+b5.MouseButton1Click:Connect(function() antiAfkOn=not antiAfkOn b5.Text=antiAfkOn and "ANTI AFK: ON" or "ANTI AFK: OFF" b5.BackgroundColor3=antiAfkOn and Color3.fromRGB(0,150,0) or Color3.fromRGB(35,35,35) end)
+player.Idled:Connect(function() if antiAfkOn then game:GetService("VirtualUser"):Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame) wait(1) game:GetService("VirtualUser"):Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame) end end)
+
+bAnuncio.MouseButton1Click:Connect(function() if caixaFala.Text ~= "" then anunciarTopo(caixaFala.Text) end end)
+b14.MouseButton1Click:Connect(function() if workspace:FindFirstChild("Plots") then for _,p in pairs(workspace.Plots:GetChildren()) do if string.find(p.Name,player.Name) then player.Character.HumanoidRootPart.CFrame=CFrame.new(p:GetPivot().Position+Vector3.new(0,10,0)) end end end end)
 b15.MouseButton1Click:Connect(function() menu.Visible=not menu.Visible end)
 UIS.InputBegan:Connect(function(i) if i.KeyCode==Enum.KeyCode.M then menu.Visible=not menu.Visible end end)
-
-anunciarTopo("MGS AUTO PALHAÇO V11 CARREGADO!")
