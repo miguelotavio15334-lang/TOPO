@@ -1,4 +1,4 @@
--- MGS ULTRA PAINEL - COMPLETO COM GIRAR RAPIDO NO MENU
+-- MGS ULTRA PAINEL - GIRAR 1000 TURBO
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local UIS = game:GetService("UserInputService")
@@ -32,14 +32,15 @@ local function criarBotao(txt, y, cor)
 end
 
 local t = Instance.new("TextLabel", menu)
+t.Parent = menu
 t.Size = UDim2.new(1,0,0,40)
-t.Text = "🤡 MGS PALHAÇO ULTRA"
+t.Position = UDim2.new(0,0,0,0)
+t.Text = "🤡 MGS PALHAÇO 1000 TURBO"
 t.TextScaled = true
 t.BackgroundTransparency = 1
 t.TextColor3 = Color3.fromRGB(255,0,0)
 t.Font = Enum.Font.GothamBlack
 
--- BOTOES NO MENU
 local b1 = criarBotao("VELOCIDADE 150: OFF", 45)
 local b2 = criarBotao("NOCLIP: OFF", 85)
 local b3 = criarBotao("VOAR 200 WASD: OFF", 125)
@@ -51,7 +52,7 @@ local b8 = criarBotao("INVISIVEL REAL: OFF", 325)
 local b9 = criarBotao("ESP PALHAÇOS: OFF", 365)
 local b10 = criarBotao("ANTI VOID: OFF", 405)
 local b11 = criarBotao("SUPER PULO 200", 445)
-local b12 = criarBotao("GIRAR RAPIDO: OFF", 485)
+local b12 = criarBotao("GIRAR 500: OFF", 485)
 local b13 = criarBotao("TELEPORTE MINHA BASE", 525)
 local b14 = criarBotao("DAR PENNYWISE SECRET", 565, Color3.fromRGB(150,0,0))
 local b15 = criarBotao("DAR 10M", 605, Color3.fromRGB(0,120,0))
@@ -59,7 +60,7 @@ local b16 = criarBotao("FECHAR (M)", 645, Color3.fromRGB(80,80,80))
 
 local noclipOn, flyOn, autoFlyOn, autoBoiarOn, infOn, autoOn, invisOn, espOn, antiVoidOn, girandoOn = false,false,false,false,false,false,false,false,false,false
 local invisParts = {}
-local velocidadeGiro = 50
+local velocidadeGiro = 500
 
 -- VELOCIDADE
 b1.MouseButton1Click:Connect(function()
@@ -110,12 +111,12 @@ RS.Heartbeat:Connect(function() if antiVoidOn and player.Character.HumanoidRootP
 
 b11.MouseButton1Click:Connect(function() player.Character.Humanoid.JumpPower=200 b11.Text="SUPER PULO 200: ON" b11.BackgroundColor3=Color3.fromRGB(0,150,0) end)
 
--- ★ GIRAR RAPIDO - NO MENU ★
+-- ★ GIRAR 500 / 1000 TURBO ★
 b12.MouseButton1Click:Connect(function()
 	girandoOn = not girandoOn
-	b12.Text = girandoOn and "GIRAR RAPIDO: ON" or "GIRAR RAPIDO: OFF"
-	b12.BackgroundColor3 = girandoOn and Color3.fromRGB(0,150,0) or Color3.fromRGB(35,35,35)
 	if girandoOn then
+		velocidadeGiro = 500
+		b12.Text = "GIRAR 500: ON (500)" b12.BackgroundColor3 = Color3.fromRGB(0,150,0)
 		spawn(function()
 			while girandoOn and player.Character and player.Character:FindFirstChild("HumanoidRootPart") do
 				RS.Heartbeat:Wait()
@@ -123,6 +124,8 @@ b12.MouseButton1Click:Connect(function()
 				root.CFrame = root.CFrame * CFrame.Angles(0, math.rad(velocidadeGiro), 0)
 			end
 		end)
+	else
+		b12.Text = "GIRAR 500: OFF" b12.BackgroundColor3 = Color3.fromRGB(35,35,35)
 	end
 end)
 
@@ -134,7 +137,7 @@ b16.MouseButton1Click:Connect(function() menu.Visible=not menu.Visible end)
 UIS.InputBegan:Connect(function(input)
 	if input.KeyCode==Enum.KeyCode.M then menu.Visible=not menu.Visible end
 	if girandoOn then
-		if input.KeyCode==Enum.KeyCode.Equals then velocidadeGiro+=10 b12.Text="GIRAR RAPIDO: ON ("..velocidadeGiro..")" end
-		if input.KeyCode==Enum.KeyCode.Minus then velocidadeGiro=math.max(5,velocidadeGiro-10) b12.Text="GIRAR RAPIDO: ON ("..velocidadeGiro..")" end
+		if input.KeyCode==Enum.KeyCode.Equals then velocidadeGiro=1000 b12.Text="GIRAR 1000 TURBO: ON (1000)" b12.BackgroundColor3=Color3.fromRGB(255,0,0) end
+		if input.KeyCode==Enum.KeyCode.Minus then velocidadeGiro=500 b12.Text="GIRAR 500: ON (500)" b12.BackgroundColor3=Color3.fromRGB(0,150,0) end
 	end
 end)
